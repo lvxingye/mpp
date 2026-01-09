@@ -37,7 +37,7 @@ jobs:
         make -j$(nproc)
     - name: Package artifacts
       run: |
-        tar czf mpp-rk3566.tar.gz mpp/build
+        tar czf mpp-rk3566.tar.gz build
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
