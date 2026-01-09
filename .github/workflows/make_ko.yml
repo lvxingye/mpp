@@ -1,0 +1,45 @@
+name: compile mpp kernel module
+
+on:
+  push:
+    branches: [ "develop" ]
+  pull_request:
+    branches: [ "develop" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-22.04
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          cmake \
+          make \
+          gcc-aarch64-linux-gnu \
+          g++-aarch64-linux-gnu \
+          pkg-config \
+          libdrm-dev
+    - name: build
+      run: |
+        cd build
+        cmake .. \
+        -DCMAKE_SYSTEM_NAME=Linux \
+        -DCMAKE_SYSTEM_PROCESSOR=aarch64 \
+        -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc \
+        -DCMAKE_CXX_COMPILER=aarch64-linux-gnu-g++ \
+        -DRKPLATFORM=RK356X \
+        -DHAVE_DRM=ON \
+        -DHAVE_V4L2=ON
+        make -j$(nproc)
+    - name: Package artifacts
+      run: |
+        tar czf mpp-rk3566.tar.gz mpp/build
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: mpp-rk3566
+        path: mpp-rk3566.tar.gz
