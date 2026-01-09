@@ -21,6 +21,8 @@ jobs:
           make \
           gcc-aarch64-linux-gnu \
           g++-aarch64-linux-gnu \
+          gcc-arm-linux-gnueabi \
+          g++-arm-linux-gnueabi \
           pkg-config \
           libdrm-dev
     - name: build
