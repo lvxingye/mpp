@@ -25,19 +25,12 @@ jobs:
           libdrm-dev
     - name: build
       run: |
-        cd build
-        cmake .. \
-        -DCMAKE_SYSTEM_NAME=Linux \
-        -DCMAKE_SYSTEM_PROCESSOR=aarch64 \
-        -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc \
-        -DCMAKE_CXX_COMPILER=aarch64-linux-gnu-g++ \
-        -DRKPLATFORM=RK356X \
-        -DHAVE_DRM=ON \
-        -DHAVE_V4L2=ON
+        cd build/linux/arm
+        bash bmake-Makefiles.bash
         make -j$(nproc)
     - name: Package artifacts
       run: |
-        tar czf mpp-rk3566.tar.gz build
+        tar czf mpp-rk3566.tar.gz build/linux/arm
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
