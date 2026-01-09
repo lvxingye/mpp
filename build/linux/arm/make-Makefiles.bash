@@ -5,7 +5,7 @@ set +e
 
 MPP_PWD=`pwd`
 MPP_TOP=${MPP_PWD}/../../..
-DEFAULT_TOOLCHAIN=arm-linux-gnueabi-
+DEFAULT_TOOLCHAIN=aarch64-linux-gnueabi-
 
 # toolchain detection
 check_cmd(){
